@@ -1,0 +1,80 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(21, 34, 46, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--ink);
+}
+.overlay * { box-sizing: border-box; }
+
+.dialog {
+  position: relative;
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 1.75rem;
+  width: min(520px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+}
+.dialog h2 { margin: 0.9rem 0 0; font-size: 1.5rem; }
+.dialog .sub { margin: 1.25rem 0 0.25rem; font-size: 1rem; }
+.dialog .price.big { font-size: 1.8rem; margin: 0.25rem 0 0; }
+
+.close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  font-size: 1.6rem;
+  line-height: 1;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+/* Rendszámtábla */
+.plate {
+  display: inline-flex;
+  align-items: stretch;
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+  background: var(--plate);
+  overflow: hidden;
+  font-weight: 700;
+}
+.plate-eu {
+  background: var(--eu);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0.25rem 0.35rem;
+  display: flex;
+  align-items: flex-end;
+}
+.plate-text {
+  padding: 0.15rem 0.6rem;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+}
+
+/* Extrák */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.25rem 0 0;
+}
+.chips li {
+  background: #e6eef4;
+  color: var(--brand);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.78rem;
+}

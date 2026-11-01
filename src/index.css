@@ -1,0 +1,93 @@
+/* Közös változók és a Home + VehicleDetails által is használt elemek */
+:root {
+
+    --bg: #ffffff;
+  --text: #1a1a1a;
+  --card: #f4f4f5;
+  --border: #e4e4e7;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f0f12;
+  --text: #f4f4f5;
+  --card: #1c1c21;
+  --border: #2e2e36;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.2s, color 0.2s;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+
+
+
+html.dark {
+  --background-color: #16171d;
+  --text-color: #9ca3af;
+  --button-bg: #c084fc;
+  --button-text: #ffffff;
+}
+
+
+
+button:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.card-sub {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0.5rem 0 0;
+}
+.specs div { min-width: 0; }
+.specs dt { font-size: 0.75rem; color: var(--muted); }
+.specs dd {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.specs .vin {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+.state {
+  background: var(--panel);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 1.5rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.state.err {
+  border-color: #b3382c;
+  color: #7d2219;
+}
