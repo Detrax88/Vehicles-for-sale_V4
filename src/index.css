@@ -1,15 +1,16 @@
 /* Közös változók és a Home + VehicleDetails által is használt elemek */
 :root {
 
-    --bg: #ffffff;
+    --bg: rgb(139, 139, 248);
   --text: #1a1a1a;
   --card: #f4f4f5;
   --border: #e4e4e7;
 }
 
+
 :root[data-theme="dark"] {
   --bg: #0f0f12;
-  --text: #f4f4f5;
+  --text: #0bb156;
   --card: #1c1c21;
   --border: #2e2e36;
 }
@@ -21,18 +22,20 @@ body {
 }
 
 .card {
+  display: flex;
   background: var(--card);
   border: 1px solid var(--border);
   padding: 1rem;
   border-radius: 8px;
+
 }
 
 
 
 
 html.dark {
-  --background-color: #16171d;
-  --text-color: #9ca3af;
+  --background-color: #1d1313;
+  --text-color: #253544;
   --button-bg: #c084fc;
   --button-text: #ffffff;
 }

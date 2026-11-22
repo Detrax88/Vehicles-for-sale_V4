@@ -4,14 +4,19 @@ import { HAJTAS, VALTO, ft, datum } from "../services/utils";
 import "../index.css";
 import "../css/VehicleDetails.css";
 
+
+
 function Plate({ value }) {
   return (
     <span className="plate" aria-label={`Rendszám: ${value}`}>
       <span className="plate-eu">H</span>
-      <span className="plate-text">{value}</span>
+      <span className="plate-text">{value}</span>      
     </span>
   );
 }
+
+
+
 
 // Egy autó részletes adatai felugró ablakban (/des/<id>/ – SerDes)
  export function VehicleDetails({ id, onClose }) {
@@ -62,7 +67,9 @@ function Plate({ value }) {
               <div><dt>Váltó</dt><dd>{VALTO[car.gearbox] ?? car.gearbox}</dd></div>
               <div><dt>Hajtás</dt><dd>{HAJTAS[car.drive_method] ?? car.drive_method}</dd></div>
               <div><dt>Forgalomba helyezés</dt><dd>{datum(car.registration_date)}</dd></div>
+              
             </dl>
+             
 
             <h3 className="sub">Felszereltség</h3>
             {car.extras?.length ? (

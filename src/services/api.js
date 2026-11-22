@@ -1,7 +1,35 @@
 const API_BASE = "http://127.0.0.1:8000";
+export const API_BASE_URL = "http://127.0.0.1:8000";
+
+export const API_ENDPOINTS = {
+  register: `${API_BASE_URL}/auth/register/`,
+  login: `${API_BASE_URL}/auth/login/`,
+};
+
+export async function loginUser({ email, password }) {
+  const response = await fetch(API_ENDPOINTS.login, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  let data = {};
+  try {
+    data = await response.json();
+  } catch {
+    // a válasz nem JSON
+  }
+
+  return { ok: response.ok, status: response.status, data };
+}
+
+
 
 export const URL_HOME = `${API_BASE}/home/`;
 export const URL_DES = (id) => `${API_BASE}/des/${id}/`;
+
+export const imgUrl = (path) =>
+  !path ? null : path.startsWith("http") ? path : `${API_BASE}${path}`;
 
 async function getJson(url, signal) {
   const res = await fetch(url, { signal });
@@ -19,3 +47,5 @@ export async function fetchCars(signal) {
 export function fetchCar(id, signal) {
   return getJson(URL_DES(id), signal);
 }
+
+

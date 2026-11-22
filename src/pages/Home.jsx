@@ -1,17 +1,43 @@
 import { useEffect, useMemo, useState } from "react";
-import { fetchCars } from "../services/api";
+import { fetchCars, imgUrl } from "../services/api";
 import { HAJTAS, VALTO, ft, datum, year } from "../services/utils";
 import { VehicleDetails } from "../components/VehicleDetails";
 import "../index.css";
 import "../css/Home.css";
+import FavoriteButton from "../components/FavoriteButton";
+
+
+
+
+
+
 
 /* Autó kártya (SerHome adatai) */
 function CarCard({ car, onOpen }) {
+  const first = Array.isArray(car.images) ? car.images[0] : car.images;
+  const src = imgUrl(typeof first === "string" ? first : first?.image);
+
   return (
     <article className="card">
+      <button type="button" className="primary" onClick={() => onOpen(car.id)}>
+         {src ? (
+          <img
+            className="card-img"
+            src={src}
+            alt={`${car.gyarto} ${car.model}`}
+            loading="lazy"
+          />
+        ) : (
+          <span className="card-img placeholder">Nincs kép</span>
+        )}
+      </button>
+
       <div className="card-top">
         <h3 className="card-title">{car.gyarto} {car.model}</h3>
-        <span className="price">{ft(car.price_eur)} €</span>
+        <div className="card-actions">
+          <FavoriteButton vehicle={car} />
+          <span className="price">{ft(car.price_eur)} €</span>
+        </div>
       </div>
       <p className="card-sub">{car.type} · {car.eng_volume}</p>
 
@@ -23,10 +49,11 @@ function CarCard({ car, onOpen }) {
         <div><dt>Szín</dt><dd>{car.colour}</dd></div>
         <div><dt>Forgalomba helyezés</dt><dd>{datum(car.registration_date)}</dd></div>
       </dl>
-
       <button type="button" className="primary" onClick={() => onOpen(car.id)}>
         Részletek
-      </button>
+      </button>     
+
+   
     </article>
   );
 }
@@ -57,6 +84,8 @@ export default function Home() {
       });
     return () => ctrl.abort();
   }, []);
+
+  
 
   // A szűrők opciói magukból az autókból jönnek
   const gyartok = useMemo(() => [...new Set(cars.map((c) => c.gyarto))].sort(), [cars]);
@@ -91,7 +120,7 @@ export default function Home() {
   return (
     <div className="home">
       <header className="top">
-        <h1>Használt autók</h1>
+        <h2>Használt autók</h2>
         <p>{status === "ok" ? `${shown.length} találat ${cars.length} autóból` : "Autók betöltése…"}</p>
       </header>
 
@@ -126,7 +155,7 @@ export default function Home() {
                 onChange={(e) => set({ maxPrice: e.target.value })} />
             </label>
             <label>
-              Évjárat-tól
+              Évjárattól
               <input type="number" min="1950" max={new Date().getFullYear()} value={f.minYear}
                 onChange={(e) => set({ minYear: e.target.value })} />
             </label>
@@ -185,5 +214,7 @@ export default function Home() {
 
       {openId !== null && <VehicleDetails id={openId} onClose={() => setOpenId(null)} />}
     </div>
+    
+      
   );
 }

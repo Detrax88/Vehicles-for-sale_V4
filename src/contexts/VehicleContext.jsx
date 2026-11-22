@@ -6,21 +6,29 @@ export const useVehicleContext = () =>
     useContext(VehicleContext);
 
 export const VehicleProvider = ({children}) => {
-    const [favorites, setFavorites] = useState([]);
-
-    useEffect(() => {
+    const [favorites, setFavorites] = useState(() => {
+        try {
         const storedFavorites = localStorage.getItem('favorites');
         if (storedFavorites) {
-            setFavorites(JSON.parse(storedFavorites));
+                const parsedFavorites = JSON.parse(storedFavorites);
+                return Array.isArray(parsedFavorites) ? parsedFavorites : [];
         }
-    }, []);
+        } catch {
+            return [];
+        }
+        return [];
+    });
 
     useEffect(() => {
         localStorage.setItem('favorites', JSON.stringify(favorites));
     }, [favorites]);
 
     const addtoFavorites = (vehicle) => {
-        setFavorites(prev => [...prev, vehicle]);
+        setFavorites(prev =>
+            prev.some(favorite => favorite.id === vehicle.id)
+                ? prev
+                : [...prev, vehicle]
+        );
     };
 
     const removeFromFavorites = (vehicleId) => {

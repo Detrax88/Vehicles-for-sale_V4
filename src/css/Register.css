@@ -1,0 +1,72 @@
+.register-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  gap: 0.4rem;
+}
+
+.register-form h1 {
+  margin: 0 0 1rem;
+}
+
+.register-form label {
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+.register-form input {
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+}
+
+.register-form input:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.register-form input.input-error {
+  border-color: crimson;
+}
+
+.error-text {
+  margin: 0;
+  font-size: 0.875rem;
+  color: crimson;
+}
+
+.success-text {
+  margin: 0.5rem 0 0;
+  font-weight: 600;
+  color: green;
+}
+
+.submit-button {
+  margin-top: 1.25rem;
+  padding: 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1a73e8;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.submit-button:hover {
+  background: #1557b0;
+}
+
+.submit-button:disabled {
+  background: #9bbcf0;
+  cursor: not-allowed;
+}

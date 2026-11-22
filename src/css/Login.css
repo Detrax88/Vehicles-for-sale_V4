@@ -1,0 +1,86 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  gap: 0.4rem;
+}
+
+.login-form h1 {
+  margin: 0 0 1rem;
+}
+
+.login-form label {
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"],
+.login-form input[type="text"] {
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.login-form input.input-error {
+  border-color: crimson;
+}
+
+.login-form .show-password {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.login-form .error-text {
+  margin: 0;
+  font-size: 0.875rem;
+  color: crimson;
+}
+
+.login-form .submit-button {
+  margin-top: 1.25rem;
+  padding: 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1a73e8;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.login-form .submit-button:hover {
+  background: #1557b0;
+}
+
+.form-footer {
+  margin: 1rem 0 0;
+  text-align: center;
+}
+
+.form-footer a {
+  color: #1a73e8;
+}
+
+.login-form .submit-button:disabled {
+  background: #9bbcf0;
+  cursor: not-allowed;
+}
