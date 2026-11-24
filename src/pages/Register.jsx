@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Register.css";
 import { API_ENDPOINTS } from "../services/api";
+import { API_BASE } from "../services/api";
 
 
 const EMPTY_FORM = {

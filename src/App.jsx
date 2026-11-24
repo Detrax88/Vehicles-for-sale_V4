@@ -5,30 +5,56 @@ import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import useTheme from './contexts/useTheme.js'
 import Favorites from './pages/Favorites.jsx'
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, useNavigate} from 'react-router-dom'
 import "./index.css";
 import LoginButton from "./components/LoginButton";
 import RegisterButton from "./components/RegisterButton";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import { useAuth } from './contexts/AuthContext.jsx'
 
 
 
 export default function App() {
   
   const { theme, toggleTheme } = useTheme();
-  const handleLogin = () => console.log("Bejelentkezés kattintás");
-  const handleRegister = () => console.log("Regisztráció kattintás");
+  //const handleLogin = () => console.log("Bejelentkezés kattintás");
+  //const handleRegister = () => console.log("Regisztráció kattintás");
+  const { isLoggedIn, username, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
    
 
   return (
     <>
-      <div style={{ display: "flex", gap: "0.75rem" }}>
-      <LoginButton onClick={handleLogin} />
-      <RegisterButton onClick={handleRegister} />
-    </div>
-    <div className="card">
+      <header style={{ 
+        display: "flex",
+        alignItems: "center",
+        gap: "0.75rem",
+        padding: "1rem",}}
+        >
+        {isLoggedIn ? (
+          <> 
+          <span>
+        Bejelentkezve: <strong>{username}</strong>
+      </span>
+      <button type="button" className="login-button" onClick={handleLogout}>
+        Kijelentkezés
+      </button>
+        </>
+        ) : (
+        <>
+      <LoginButton />
+      <RegisterButton />
+    </>
+            )}
+            </header>
+    <div className="card-day-night">
       
       <button onClick={toggleTheme}>
         {theme === "dark" ? "☀️ Nappali mód" : "🌙 Éjszakai mód"}
@@ -50,6 +76,5 @@ export default function App() {
         </Routes>
       </main>
        </>
-  )
+  );
 }
-

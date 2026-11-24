@@ -30,6 +30,12 @@ body {
 
 }
 
+.card-day-night {
+  display: flex;
+  justify-content: right;
+
+
+}
 
 
 

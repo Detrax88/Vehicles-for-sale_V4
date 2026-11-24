@@ -2,13 +2,17 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/api";
 import "../css/Login.css";
+import { useAuth } from "../contexts/AuthContext";
+
+
 
 const EMPTY_FORM = {
-  email: "",
+  username: "",
   password: "",
 };
 
 export default function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
@@ -25,8 +29,8 @@ export default function Login() {
   const validate = () => {
     const newErrors = {};
 
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) {
-      newErrors.email = "Adj meg egy érvényes e-mail címet.";
+    if (form.username.trim().length === 0) {
+      newErrors.username = "Add meg a felhasználóneved.";
     }
 
     if (form.password.length === 0) {
@@ -47,32 +51,33 @@ export default function Login() {
     setLoading(true);
     try {
       const { ok, status, data } = await loginUser({
-        email: form.email,
+        username: form.username.trim(),
         password: form.password,
       });
 
       if (ok) {
-        // A backend válaszától függően: DRF token ("token") vagy JWT ("access")
-        const token = data.token || data.access;
-        if (token) {
-          localStorage.setItem("token", token);
-        }
-        if (data.refresh) {
-          localStorage.setItem("refresh", data.refresh);
-        }
+        // SimpleJWT: access + refresh token
+        login(data.access, data.refresh, form.username.trim());
         navigate("/");
         return;
       }
 
-      if (status === 400 || status === 401) {
-        const message =
-          data.detail ||
-          (Array.isArray(data.non_field_errors) && data.non_field_errors.join(" ")) ||
-          "Hibás e-mail cím vagy jelszó.";
-        setServerError(message);
-      } else {
-        setServerError(data.detail || "A bejelentkezés sikertelen. Próbáld újra.");
+      if (status === 401) {
+        setServerError("Hibás felhasználónév vagy jelszó.");
+        return;
       }
+
+      // Egyéb hibák: a szerver tényleges üzenetének megjelenítése
+      const messages = Object.entries(data).map(([key, value]) => {
+        const text = Array.isArray(value) ? value.join(" ") : String(value);
+        return key === "detail" ? text : `${key}: ${text}`;
+      });
+
+      setServerError(
+        messages.length > 0
+          ? messages.join(" ")
+          : `A bejelentkezés sikertelen (${status}).`
+      );
     } catch {
       setServerError("Nem sikerült kapcsolódni a szerverhez.");
     } finally {
@@ -85,17 +90,17 @@ export default function Login() {
       <form className="login-form" onSubmit={handleSubmit} noValidate>
         <h1>Bejelentkezés</h1>
 
-        <label htmlFor="login-email">E-mail cím</label>
+        <label htmlFor="login-username">Felhasználónév</label>
         <input
-          id="login-email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          value={form.email}
+          id="login-username"
+          name="username"
+          type="text"
+          autoComplete="username"
+          value={form.username}
           onChange={handleChange}
-          className={errors.email ? "input-error" : ""}
+          className={errors.username ? "input-error" : ""}
         />
-        {errors.email && <p className="error-text">{errors.email}</p>}
+        {errors.username && <p className="error-text">{errors.username}</p>}
 
         <label htmlFor="login-password">Jelszó</label>
         <input
